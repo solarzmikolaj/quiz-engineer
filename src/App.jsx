@@ -1,82 +1,60 @@
-import { useState, useCallback } from "react";
-import Home from "./components/Home";
-import Quiz from "./components/Quiz";
-import Results from "./components/Results";
-import questionsData from "../questions.json";
+import { useState, useMemo } from "react";
+import Dashboard from "./components/Dashboard";
+import StudyView from "./components/StudyView";
+import { ToastProvider } from "./components/Toast";
+import data from "../questions.json";
 
-const VIEWS = { HOME: "home", QUIZ: "quiz", RESULTS: "results" };
-
-function shuffleArray(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
+const allCards = data.flashcards;
+const categories = data.categories;
 
 export default function App() {
-  const [view, setView] = useState(VIEWS.HOME);
-  const [quizQuestions, setQuizQuestions] = useState([]);
-  const [answers, setAnswers] = useState([]);
+  const [view, setView] = useState("dashboard");
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
-  const startQuiz = useCallback((count) => {
-    const shuffled = shuffleArray(questionsData.questions);
-    const selected = shuffled.slice(0, count).map((q) => ({
-      ...q,
-      options: shuffleArray(q.options),
-    }));
-    setQuizQuestions(selected);
-    setAnswers([]);
-    setView(VIEWS.QUIZ);
-  }, []);
+  const filteredEntries = useMemo(() => {
+    return allCards
+      .map((card, index) => ({ card, index }))
+      .filter(({ card }) => !selectedCategory || card.category === selectedCategory);
+  }, [selectedCategory]);
 
-  const finishQuiz = useCallback((userAnswers) => {
-    setAnswers(userAnswers);
-    setView(VIEWS.RESULTS);
-  }, []);
+  const filteredCards = useMemo(
+    () => filteredEntries.map(({ card }) => card),
+    [filteredEntries]
+  );
 
-  const goHome = useCallback(() => setView(VIEWS.HOME), []);
+  const filteredIndices = useMemo(
+    () => new Set(filteredEntries.map(({ index }) => index)),
+    [filteredEntries]
+  );
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="bg-white/80 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto px-4 py-3 flex items-center gap-3">
-          <button
-            onClick={goHome}
-            className="text-2xl font-bold text-primary hover:text-primary-dark transition-colors cursor-pointer"
-          >
-            Quiz Engineer
-          </button>
-          <span className="text-sm text-slate-400 hidden sm:inline">
-            Bazy Danych
-          </span>
-        </div>
-      </header>
-
-      <main className="flex-1 max-w-4xl w-full mx-auto px-4 py-6 sm:py-10">
-        {view === VIEWS.HOME && (
-          <Home
-            totalQuestions={questionsData.questions.length}
-            onStart={startQuiz}
+    <ToastProvider>
+      <div className="h-full flex flex-col bg-[#0f0f1a]">
+        {view === "dashboard" && (
+          <Dashboard
+            allCards={allCards}
+            categories={categories}
+            selectedCategory={selectedCategory}
+            onSelectCategory={setSelectedCategory}
+            filteredIndices={filteredIndices}
+            filteredCards={filteredCards}
+            onStartStudy={() => setView("study")}
           />
         )}
-        {view === VIEWS.QUIZ && (
-          <Quiz questions={quizQuestions} onFinish={finishQuiz} />
-        )}
-        {view === VIEWS.RESULTS && (
-          <Results
-            questions={quizQuestions}
-            answers={answers}
-            onRestart={() => startQuiz(quizQuestions.length)}
-            onHome={goHome}
+        {view === "study" && (
+          <StudyView
+            allCards={allCards}
+            filteredIndices={filteredIndices}
+            filteredCards={filteredCards}
+            categoryName={
+              selectedCategory
+                ? categories.find((c) => c.id === selectedCategory)?.name
+                : "Wszystkie"
+            }
+            onBack={() => setView("dashboard")}
           />
         )}
-      </main>
-
-      <footer className="text-center text-xs text-slate-400 py-4 border-t border-slate-100">
-        Quiz Engineer &copy; {new Date().getFullYear()}
-      </footer>
-    </div>
+      </div>
+    </ToastProvider>
   );
 }
