@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #6366f1;
+  --color-primary-dark: #4f46e5;
+  --color-correct: #10b981;
+  --color-correct-light: #d1fae5;
+  --color-wrong: #ef4444;
+  --color-wrong-light: #fee2e2;
+  --color-surface: #f8fafc;
+  --color-surface-dark: #1e293b;
+}
+
+body {
+  @apply bg-gradient-to-br from-slate-50 to-indigo-50 min-h-screen text-slate-800 antialiased;
+}
+
+@utility animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}

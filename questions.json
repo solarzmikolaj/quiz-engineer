@@ -1,0 +1,428 @@
+{
+    "questions": [
+      {
+        "question": "Które z poniższych twierdzeń opisują założenia Pierwszej Postaci Normalnej (1NF)?",
+        "options": [
+          { "text": "Każdy atrybut musi zawierać wartość niepodzielną (skalarną).", "is_correct": true },
+          { "text": "Wyeliminowane są wszystkie zależności przechodnie.", "is_correct": false },
+          { "text": "Nie występują grupy powtarzających się informacji wewnątrz jednej encji.", "is_correct": true },
+          { "text": "Tabela posiada unikalny klucz identyfikujący wiersze.", "is_correct": true }
+        ]
+      },
+      {
+        "question": "Na czym polega anomalia typu 'Fantom' (Phantom Read)?",
+        "options": [
+          { "text": "Transakcja odczytuje dane, które nie zostały jeszcze zatwierdzone przez inną transakcję.", "is_correct": false },
+          { "text": "Podczas wykonywania tego samego zapytania w ramach jednej transakcji pojawiają się nowe wiersze dodane w międzyczasie przez inną transakcję.", "is_correct": true },
+          { "text": "Wartość rekordu zmienia się pomiędzy dwoma odczytami w tej samej transakcji, ponieważ inna transakcja go zmodyfikowała.", "is_correct": false },
+          { "text": "Transakcja zakleszcza się (deadlock) w oczekiwaniu na zwolnienie blokady współdzielonej.", "is_correct": false }
+        ]
+      },
+      {
+        "question": "Jakie są różnice w poziomach izolacji transakcji między standardem ANSI/MS SQL Server a PostgreSQL?",
+        "options": [
+          { "text": "W PostgreSQL poziom Read Uncommitted zachowuje się w praktyce tak samo jak Read Committed (nie pozwala na Dirty Read).", "is_correct": true },
+          { "text": "W MS SQL Server poziom Repeatable Read całkowicie zapobiega występowaniu fantomów.", "is_correct": false },
+          { "text": "W PostgreSQL poziom Repeatable Read zapobiega występowaniu fantomów, w przeciwieństwie do standardu ANSI.", "is_correct": true },
+          { "text": "MS SQL Server nie obsługuje poziomu Serializable.", "is_correct": false }
+        ]
+      },
+      {
+        "question": "Czym charakteryzuje się indeks pogrupowany (Clustered Index) w MS SQL Server?",
+        "options": [
+          { "text": "Wymusza fizyczne uporządkowanie danych na dysku według klucza indeksu.", "is_correct": true },
+          { "text": "Można utworzyć do 249 takich indeksów na jednej tabeli.", "is_correct": false },
+          { "text": "Najniższy poziom (liście) tego indeksu zawiera bezpośrednio dane tabeli.", "is_correct": true },
+          { "text": "Zawsze musi być zakładany na kolumnę będącą kluczem obcym.", "is_correct": false }
+        ]
+      },
+      {
+        "question": "Które z poniższych rodzajów indeksów są specyficzne lub najbardziej charakterystyczne dla silnika PostgreSQL?",
+        "options": [
+          { "text": "GIN (Generalized Inverted Index) - idealny do przeszukiwania typów złożonych jak JSONB czy tablice.", "is_correct": true },
+          { "text": "Columnstore Index - optymalizujący zapytania analityczne na dużych hurtowniach danych.", "is_correct": false },
+          { "text": "BRIN (Block Range Index) - bardzo lekki indeks przeznaczony dla ogromnych, sekwencyjnie zapisywanych tabel.", "is_correct": true },
+          { "text": "GiST (Generalized Search Tree) - wykorzystywany m.in. w danych przestrzennych (PostGIS) i wyszukiwaniu pełnotekstowym.", "is_correct": true }
+        ]
+      },
+      {
+        "question": "Które praktyki są uznawane za dobre podczas optymalizacji zapytań SQL (niezależnie od silnika)?",
+        "options": [
+          { "text": "Aplikowanie funkcji na kolumnie w klauzuli WHERE (np. WHERE YEAR(Data) = 2023).", "is_correct": false },
+          { "text": "Zastępowanie kursorów operacjami opartymi na zbiorach (set-based).", "is_correct": true },
+          { "text": "Tworzenie indeksów pokrywających (Covering Indexes), by serwer mógł zwrócić wyniki bez sięgania do tabeli bazowej.", "is_correct": true },
+          { "text": "Indeksowanie każdej kolumny w tabeli w celu maksymalizacji wydajności zapisów.", "is_correct": false }
+        ]
+      },
+      {
+        "question": "Jakie polecenia w PostgreSQL służą do analizy wydajności zapytania i sprawdzenia, czy wykorzystany został indeks?",
+        "options": [
+          { "text": "EXPLAIN ANALYZE", "is_correct": true },
+          { "text": "SHOW EXECUTION PLAN", "is_correct": false },
+          { "text": "EXPLAIN", "is_correct": true },
+          { "text": "TRACE QUERY", "is_correct": false }
+        ]
+      },
+      {
+        "question": "Jakie są podstawowe różnice i narzędzia w pielęgnacji bazy danych (czyszczenie z martwych rekordów i aktualizacja statystyk) pomiędzy MS SQL Server a PostgreSQL?",
+        "options": [
+          { "text": "W MS SQL Server używa się poleceń REORGANIZE lub REBUILD w celu redukcji fragmentacji indeksów.", "is_correct": true },
+          { "text": "W PostgreSQL używa się polecenia VACUUM, aby odzyskać przestrzeń po zaktualizowanych/usuniętych wierszach (martwych krotkach).", "is_correct": true },
+          { "text": "W PostgreSQL polecenie ANALYZE zbiera statystyki o rozkładzie danych, pomagając optymalizatorowi zapytań.", "is_correct": true },
+          { "text": "W MS SQL Server martwe krotki są czyszczone wyłącznie poprzez polecenie SHRINK DATABASE.", "is_correct": false }
+        ]
+      },
+      {
+        "question": "Które z wymienionych mechanizmów kopii zapasowych (backupów) są natywnie wykorzystywane w MS SQL Server?",
+        "options": [
+          { "text": "Full Backup (Kopia pełna)", "is_correct": true },
+          { "text": "Differential Backup (Kopia różnicowa)", "is_correct": true },
+          { "text": "Logical Dump poprzez narzędzie pg_dump", "is_correct": false },
+          { "text": "Transaction Log Backup (Kopia dziennika transakcji)", "is_correct": true }
+        ]
+      },
+      {
+        "question": "Jak realizuje się kopie zapasowe (backupy) i odtwarzanie danych w ekosystemie PostgreSQL?",
+        "options": [
+          { "text": "Logical Backup (Kopia logiczna) wykonuje się za pomocą narzędzi takich jak pg_dump lub pg_dumpall.", "is_correct": true },
+          { "text": "Odtwarzanie do określonego punktu w czasie (PITR) realizuje się poprzez ciągłą archiwizację plików Write-Ahead Log (WAL).", "is_correct": true },
+          { "text": "Physical Backup (Kopia fizyczna / binarna) tworzona jest za pomocą narzędzia pg_basebackup.", "is_correct": true },
+          { "text": "PostgreSQL używa wyłącznie Transaction Log Backups zapisywanych w plikach .TRN, identycznie jak MS SQL Server.", "is_correct": false }
+        ]
+      },
+      {
+        "question": "Które klauzule i obiekty zaliczamy do grupy DDL (Data Definition Language)?",
+        "options": [
+          { "text": "CREATE TABLE", "is_correct": true },
+          { "text": "ALTER INDEX", "is_correct": true },
+          { "text": "INSERT INTO", "is_correct": false },
+          { "text": "GRANT SELECT", "is_correct": false }
+        ]
+      },
+      {
+        "question": "W jaki sposób rozwiązuje się problem relacji wiele-do-wiele (M:N) na diagramach ERD przy przejściu do fizycznego modelu relacyjnego?",
+        "options": [
+          { "text": "Stosuje się dodatkową kolumnę typu tablicowego (Array) w jednej z encji.", "is_correct": false },
+          { "text": "Rozbija się związek M:N na dwa związki jednoznaczne (1:N).", "is_correct": true },
+          { "text": "Tworzy się encję asocjacyjną (łączącą), której klucz główny składa się z kluczy obcych tabel nadrzędnych.", "is_correct": true },
+          { "text": "Tworzy się złącze typu FULL OUTER JOIN bezpośrednio w strukturze tabeli.", "is_correct": false }
+        ]
+      },
+      {
+        "question": "Jak działa mechanizm MVCC (Multi-Version Concurrency Control) stosowany domyślnie w PostgreSQL (a w MS SQL dostępny jako tryb RCSI/Snapshot)?",
+        "options": [
+          { "text": "Każda transakcja nakłada twarde blokady wyłączne (X) na czas całego odczytu danych.", "is_correct": false },
+          { "text": "Zapisy do bazy nie blokują operacji odczytu wykonywanych przez inne transakcje.", "is_correct": true },
+          { "text": "Każda operacja modyfikacji tworzy nową wersję wiersza, podczas gdy stare są nadal dostępne dla transakcji odczytujących.", "is_correct": true },
+          { "text": "Odczyty w bazie zawsze blokują operacje zapisu do momentu użycia komendy COMMIT.", "is_correct": false }
+        ]
+      },
+      {
+        "question": "Które z wymienionych więzów integralności dopuszczają przechowywanie wartości NULL w kolumnie?",
+        "options": [
+          { "text": "PRIMARY KEY (Klucz główny)", "is_correct": false },
+          { "text": "FOREIGN KEY (Klucz obcy)", "is_correct": true },
+          { "text": "UNIQUE (Unikalność) - w zależności od silnika może pozwalać na jeden lub wiele wpisów NULL.", "is_correct": true },
+          { "text": "NOT NULL", "is_correct": false }
+        ]
+      },
+      {
+        "question": "Dlaczego użycie funkcji w warunku WHERE na indeksowanej kolumnie (np. WHERE LOWER(nazwisko) = 'kowalski') uznaje się za antywzorzec wydajnościowy?",
+        "options": [
+          { "text": "Powoduje to utratę właściwości SARGable (Search Argument Able) zapytania.", "is_correct": true },
+          { "text": "Zmusza optymalizator do zignorowania indeksu B-Drzewa i wykonania pełnego skanowania tabeli (Table Scan).", "is_correct": true },
+          { "text": "Blokuje całkowicie tabelę dla transakcji typu UPDATE.", "is_correct": false },
+          { "text": "W takich przypadkach w PostgreSQL można wspomóc się utworzeniem indeksu funkcyjnego (Expression Index).", "is_correct": true }
+        ]
+      },
+          {
+            "question": "Co oznacza właściwość 'Trwałość' (Durability) w kontekście transakcji spełniających reguły ACID?",
+            "options": [
+              { "text": "Zapewnia, że wszystkie instrukcje w transakcji wykonają się w całości albo żadna z nich nie zostanie zaaplikowana.", "is_correct": false },
+              { "text": "Gwarantuje, że po zatwierdzeniu (COMMIT) zmiany przetrwają w systemie nawet w przypadku nagłej awarii zasilania lub sprzętu.", "is_correct": true },
+              { "text": "Jest realizowana pod spodem m.in. dzięki mechanizmom logów transakcyjnych, takim jak WAL (Write-Ahead Logging) w PostgreSQL lub Transaction Log w MS SQL.", "is_correct": true },
+              { "text": "Oznacza, że transakcja wykonuje się całkowicie w pamięci RAM i nigdy nie zapisuje danych na dysk twardy.", "is_correct": false }
+            ]
+          },
+          {
+            "question": "Jakie są cechy i różnice w implementacji perspektyw (widoków) optymalizujących odczyt w MS SQL Server i PostgreSQL?",
+            "options": [
+              { "text": "W MS SQL Server tworzy się 'Indexed Views' (indeksowane perspektywy), które fizycznie przechowują wyliczone dane po założeniu na widok unikalnego indeksu pogrupowanego.", "is_correct": true },
+              { "text": "W PostgreSQL odpowiednikiem widoku przechowującego fizycznie dane jest 'Materialized View', który należy okresowo odświeżać (np. poleceniem REFRESH MATERIALIZED VIEW).", "is_correct": true },
+              { "text": "Każdy zwykły widok (VIEW) w obu systemach automatycznie fizycznie zapisuje wyniki na dysku, przyspieszając zapytania agregujące.", "is_correct": false },
+              { "text": "Zmaterializowane i indeksowane widoki są idealnym rozwiązaniem do tabel, w których następuje ciągły i bardzo intensywny zapis (INSERT/UPDATE), ponieważ nie powodują żadnego narzutu wydajnościowego.", "is_correct": false }
+            ]
+          },
+          {
+            "question": "Analizując plan wykonania zapytania (Execution Plan), zauważasz operację pełnego skanowania tabeli. Co powinieneś o tym wiedzieć?",
+            "options": [
+              { "text": "W silniku PostgreSQL operacja ta nazywana jest 'Seq Scan' (Sequential Scan).", "is_correct": true },
+              { "text": "W MS SQL Server określa się to jako 'Table Scan' lub 'Clustered Index Scan' (jeśli tabela posiada indeks pogrupowany, a zapytanie i tak czyta wszystko).", "is_correct": true },
+              { "text": "Pełne skanowanie tabeli jest zawsze błędem i oznacza, że baza danych uległa korupcji (uszkodzeniu).", "is_correct": false },
+              { "text": "Optymalizator może celowo wybrać pełne skanowanie zamiast użycia indeksu, jeśli uzna, że tabela jest tak mała, iż odczyt sekwencyjny będzie po prostu szybszy.", "is_correct": true }
+            ]
+          },
+          {
+            "question": "Zgodnie z postulatami Codd'a oraz logiką relacyjnych baz danych, jak traktowana jest wartość NULL?",
+            "options": [
+              { "text": "W kolumnach typu numerycznego (np. INT) wartość NULL jest zawsze matematycznie i logicznie równa zeru (0).", "is_correct": false },
+              { "text": "NULL reprezentuje brak danych, wartość nieznaną lub jeszcze nieokreśloną.", "is_correct": true },
+              { "text": "W zapytaniach SQL do sprawdzania, czy kolumna zawiera wartość NULL, należy bezwzględnie używać operatora 'IS NULL', a nie znaku równości '='.", "is_correct": true },
+              { "text": "Wartości NULL mogą być bez przeszkód przechowywane w kolumnach będących Kluczem Głównym (PRIMARY KEY).", "is_correct": false }
+            ]
+          },
+          {
+            "question": "W jaki sposób w relacyjnym modelu baz danych (ERD) prawidłowo modeluje się struktury hierarchiczne oraz śledzenie historii zmian?",
+            "options": [
+              { "text": "Struktury hierarchiczne (np. podległość pracowników) modeluje się za pomocą związków rekurencyjnych, gdzie klucz obcy wskazuje na klucz główny w tej samej tabeli.", "is_correct": true },
+              { "text": "Aby zachować historię zmian (np. historii zarobków na stanowiskach), wprowadza się encje temporalne, dodając do ich klucza głównego atrybut czasu (np. Data_od).", "is_correct": true },
+              { "text": "Historię zmian przechowuje się, nadpisując stary rekord i wymuszając na bazie zapisanie poprzedniego stanu do wbudowanej kolumny systemowej 'HistoryBackup'.", "is_correct": false },
+              { "text": "Relacyjny model danych zabrania modelowania struktur drzewiastych, należy do tego użyć wyłącznie baz noSQL.", "is_correct": false }
+            ]
+          },
+          {
+            "question": "W jaki sposób systemy RDBMS zarządzają blokadami (Locks) w klasycznym modelu współbieżności?",
+            "options": [
+              { "text": "Blokada współdzielona (Shared - S) pozwala innym transakcjom odczytywać dany zasób, ale blokuje możliwość jego modyfikacji.", "is_correct": true },
+              { "text": "Blokada wyłączna (Exclusive - X) gwarantuje wyłączny dostęp transakcji do obiektu, odrzucając próby modyfikacji oraz (w starszych modelach) odczytu przez innych.", "is_correct": true },
+              { "text": "Granulacja blokad oznacza, że blokada może zostać nałożona na różnym poziomie: np. pojedynczego wiersza (rekordu), strony danych lub całej tabeli.", "is_correct": true },
+              { "text": "Blokady zakładane są przez SZBD tylko i wyłącznie wtedy, gdy użytkownik ręcznie wpisze komendę 'LOCK TABLE' w swoim zapytaniu SQL.", "is_correct": false }
+            ]
+          },
+          {
+            "question": "Język SQL jest deklaratywny, ale systemy baz danych oferują również rozszerzenia proceduralne. Które zdania prawidłowo opisują te technologie?",
+            "options": [
+              { "text": "W systemie MS SQL Server językiem proceduralnym jest T-SQL (Transact-SQL), pozwalający na definiowanie pętli, instrukcji IF oraz zmiennych.", "is_correct": true },
+              { "text": "Natywnym i najpopularniejszym językiem proceduralnym pozwalającym pisać procedury składowane i wyzwalacze w PostgreSQL jest PL/pgSQL.", "is_correct": true },
+              { "text": "Używanie kursorów (iterowanie wiersz po wierszu) w językach proceduralnych jest generalnie znacznie szybsze niż operacje zbiorowe (set-based) za pomocą JOIN/WHERE.", "is_correct": false },
+              { "text": "Kod napisany w PL/pgSQL lub T-SQL wykonuje się bezpośrednio na serwerze bazy danych, redukując ilość danych przesyłanych siecią do klienta.", "is_correct": true }
+            ]
+          },
+          {
+            "question": "Jakie są zasady działania indeksów złożonych (Composite Indexes) zakładanych na więcej niż jedną kolumnę?",
+            "options": [
+              { "text": "W systemie MS SQL Server indeks złożony może obejmować maksymalnie do 16 kolumn wchodzących w skład klucza indeksu.", "is_correct": true },
+              { "text": "Kolejność kolumn wymienionych przy tworzeniu indeksu złożonego nie ma najmniejszego znaczenia dla optymalizatora zapytań.", "is_correct": false },
+              { "text": "Jeżeli indeks złożony założony jest na kolumny w kolejności (A, B, C), to zapytanie zawierające w klauzuli WHERE wyłącznie warunek dotyczący kolumny (C), nie będzie w stanie użyć go optymalnie jako Index Seek.", "is_correct": true },
+              { "text": "Każdy indeks złożony jest z automatu indeksem typu GIN (Generalized Inverted Index) w PostgreSQL.", "is_correct": false }
+            ]
+          },
+          {
+            "question": "Odtwarzanie do określonego punktu w czasie (PITR - Point-In-Time Recovery) to zaawansowana technika zabezpieczania danych. Jakie są jej filary?",
+            "options": [
+              { "text": "Pozwala cofnąć całą bazę danych do dokładnego momentu (co do sekundy) tuż przed awarią np. przed przypadkowym wykonaniem polecenia DROP TABLE.", "is_correct": true },
+              { "text": "Zarówno w PostgreSQL jak i MS SQL Server do jej przeprowadzenia niezbędny jest nieprzerwany łańcuch zarchiwizowanych logów transakcyjnych (odpowiednio pliki WAL lub Transaction Logs).", "is_correct": true },
+              { "text": "Aby móc odtworzyć bazę przy pomocy PITR, nie potrzeba posiadać kopii pełnej (Full/Base Backup) – wystarczą same logi transakcyjne.", "is_correct": false },
+              { "text": "W MS SQL Server wykonanie mechanizmu PITR wymaga skonfigurowania bazy w trybie odzyskiwania o nazwie 'Simple Recovery Model'.", "is_correct": false }
+            ]
+          },
+          {
+            "question": "Postulaty E. Codd'a definiują, co oznacza, że system zarządzania bazą danych jest prawdziwie relacyjny. Czego dotyczy postulat nazwany 'Gwarancją dostępu'?",
+            "options": [
+              { "text": "Zapewnia, że żaden użytkownik sieci nie może zostać zablokowany (zbanowany) przez system autoryzacji bazy.", "is_correct": false },
+              { "text": "Stwierdza, że do każdej pojedynczej wartości (komórki) w relacyjnej bazie danych można się jednoznacznie odwołać.", "is_correct": true },
+              { "text": "Wymusza, by adresowanie komórek polegało na podaniu nazwy tabeli, nazwy kolumny oraz wartości klucza głównego danego wiersza.", "is_correct": true },
+              { "text": "Gwarantuje, że czas odpowiedzi serwera (SLA) na każde zapytanie typu SELECT wyniesie mniej niż 50 milisekund.", "is_correct": false }
+            ]
+          },
+          {
+            "question": "W ramach optymalizacji indeksów, pojęcie 'Included columns' (Kolumny dołączone/włączone) jest niezwykle przydatne. Do czego służy ten mechanizm?",
+            "options": [
+              { "text": "Do utworzenia tzw. 'indeksu pokrywającego' (Covering Index), który pozwala systemowi obsłużyć zapytanie wyłącznie na podstawie indeksu, bez zaglądania do fizycznej tabeli.", "is_correct": true },
+              { "text": "W MS SQL i PostgreSQL dołączone kolumny nie są częścią drzewa B-Tree (nie są po nich sortowane dane), a rezydują jedynie na najniższym poziomie liści indeksu.", "is_correct": true },
+              { "text": "Dodanie kolumn przez INCLUDE jest niemożliwe; każda nowa kolumna w indeksie spowalnia wyszukiwanie z powodu skomplikowanego sortowania wszystkich tych kolumn.", "is_correct": false },
+              { "text": "Umożliwia nałożenie więzów spójności typu FOREIGN KEY z poziomu samego indeksu.", "is_correct": false }
+            ]
+          },
+          {
+            "question": "W kontekście języka SQL, które grupy komend zostały poprawnie skategoryzowane do odpowiednich podjęzyków?",
+            "options": [
+              { "text": "Komendy INSERT, UPDATE, DELETE należą do grupy DML (Data Manipulation Language).", "is_correct": true },
+              { "text": "Komendy CREATE, ALTER, DROP należą do grupy DCL (Data Control Language).", "is_correct": false },
+              { "text": "Komenda SELECT reprezentuje podzbiór nazywany DQL (Data Query Language).", "is_correct": true },
+              { "text": "Komendy GRANT i REVOKE, odpowiedzialne za zarządzanie uprawnieniami, należą do grupy DCL (Data Control Language).", "is_correct": true }
+            ]
+          }
+          , {
+             "question": "Zgodnie z modelem ACID, co dokładnie oznacza postulat 'Spójności' (Consistency) w kontekście relacyjnych baz danych?",
+             "options": [
+               { "text": "Oznacza, że po zakończeniu transakcji baza danych musi znajdować się w stanie spójnym logicznie, nie łamiąc żadnych zdefiniowanych więzów integralności.", "is_correct": true },
+               { "text": "Gwarantuje, że zapytanie wykonane na serwerze MS SQL zawsze zwróci dokładnie taki sam wynik jak na serwerze PostgreSQL bez względu na użyte funkcje.", "is_correct": false },
+               { "text": "Oznacza, że jeśli transakcja naruszy więzy typu PRIMARY KEY lub CHECK, system zarządzania bazą danych automatycznie wycofa (rollback) tę operację, chroniąc poprawność danych.", "is_correct": true },
+               { "text": "Zapewnia, że wszystkie instrukcje wewnątrz transakcji wykonają się natychmiastowo, w czasie krótszym niż jedna sekunda.", "is_correct": false }
+             ]
+           },
+           {
+             "question": "Czym różni się anomalia 'Odczytu niezatwierdzonych danych' (Dirty Read) od 'Niepowtarzalnego odczytu' (Non-repeatable Read)?",
+             "options": [
+               { "text": "Dirty Read występuje, gdy odczytujemy dane zmienione przez transakcję, która jeszcze nie wykonała instrukcji COMMIT i może zostać wycofana.", "is_correct": true },
+               { "text": "Non-repeatable Read ma miejsce, gdy w ramach jednej transakcji dwukrotnie odczytujemy ten sam rekord, a w międzyczasie inna transakcja go zmodyfikowała i zatwierdziła, przez co wyniki się różnią.", "is_correct": true },
+               { "text": "W domyślnej konfiguracji, zarówno MS SQL Server (Read Committed) jak i PostgreSQL (Read Committed) chronią przed zjawiskiem Dirty Read.", "is_correct": true },
+               { "text": "Anomalia Dirty Read jest niemożliwa do odtworzenia na żadnym systemie bazodanowym, ponieważ uniemożliwiają to blokady sprzętowe dysków.", "is_correct": false }
+             ]
+           },
+           {
+             "question": "W jaki sposób zarządza się fragmentacją indeksów i odzyskiwaniem miejsca w systemach MS SQL Server oraz PostgreSQL?",
+             "options": [
+               { "text": "W MS SQL Server operacja REBUILD buduje indeks od nowa, całkowicie eliminując fragmentację, podczas gdy REORGANIZE jest lżejszą operacją działającą na poziomie liści.", "is_correct": true },
+               { "text": "W PostgreSQL zwykłe polecenie VACUUM nakłada pełną blokadę (Exclusive Lock) na tabelę i fizycznie pomniejsza plik na dysku, wykluczając odczyt przez użytkowników.", "is_correct": false },
+               { "text": "W PostgreSQL, aby całkowicie przebudować strukturę i odzyskać przestrzeń dyskową po martwych krotkach, należy użyć polecenia VACUUM FULL lub REINDEX, co wiąże się z założeniem twardej blokady na tabelę.", "is_correct": true },
+               { "text": "System MS SQL Server nie pozwala użytkownikowi na ręczną przebudowę indeksów, ponieważ wykonuje się to wyłącznie automatycznie w tle.", "is_correct": false }
+             ]
+           },
+           {
+             "question": "Jakie są fundamentalne różnice i podobieństwa pomiędzy więzami PRIMARY KEY a UNIQUE w relacyjnych bazach danych?",
+             "options": [
+               { "text": "PRIMARY KEY jednoznacznie identyfikuje wiersz, a kolumny wchodzące w jego skład nie mogą zawierać wartości NULL.", "is_correct": true },
+               { "text": "Zarówno PRIMARY KEY, jak i UNIQUE zazwyczaj automatycznie pod spodem tworzą odpowiedni indeks w bazie danych (np. B-Drzewo) na zabezpieczanych kolumnach.", "is_correct": true },
+               { "text": "W jednej tabeli może istnieć tylko jeden PRIMARY KEY, ale można zdefiniować wiele ograniczeń typu UNIQUE.", "is_correct": true },
+               { "text": "W systemie PostgreSQL ograniczenie UNIQUE całkowicie uniemożliwia dodanie choćby jednego wiersza posiadającego wartość NULL w zabezpieczanej kolumnie.", "is_correct": false }
+             ]
+           },
+           {
+             "question": "Postulaty E. Codd'a wprowadzają pojęcie 'Niezależności danych'. Jak należy rozumieć jej logiczny i fizyczny aspekt?",
+             "options": [
+               { "text": "Niezależność fizyczna oznacza, że zmiana sposobu zapisu plików na dysku (np. przeniesienie danych, podział na partycje) nie wymusza modyfikacji kodu aplikacji uderzających do bazy.", "is_correct": true },
+               { "text": "Niezależność logiczna oznacza, że dodanie nowej kolumny do tabeli nie powinno zepsuć działania dotychczasowych aplikacji, o ile struktura starych danych nie ulega zniszczeniu.", "is_correct": true },
+               { "text": "Niezależność fizyczna zabrania systemowi bazodanowemu stosowania mechanizmów buforowania danych (cache) w pamięci operacyjnej.", "is_correct": false },
+               { "text": "Niezależność logiczna wymusza używanie wyłącznie jednego ustalonego języka programowania (np. C#) do komunikacji z serwerem.", "is_correct": false }
+             ]
+           },
+           {
+             "question": "Które ze stwierdzeń dotyczących podzapytań (Subqueries) i złączeń (JOIN) są poprawne z punktu widzenia działania i optymalizacji zapytań SQL?",
+             "options": [
+               { "text": "Podzapytania skorelowane (Correlated Subqueries) charakteryzują się tym, że wykorzystują odniesienie do kolumny z zapytania zewnętrznego, co wymusza ich wykonanie dla każdego wiersza zapytania głównego.", "is_correct": true },
+               { "text": "Predykat EXISTS zwraca wartość TRUE tylko wtedy, gdy podzapytanie wewnętrzne zwróci dokładnie jedną kolumnę zawierającą typ numeryczny całkowity (INT).", "is_correct": false },
+               { "text": "Złączenie LEFT OUTER JOIN zawsze zwraca wszystkie rekordy z tabeli lewej, nawet jeśli nie posiadają one pasujących wartości w tabeli prawej (wtedy pojawia się NULL).", "is_correct": true },
+               { "text": "Z punktu widzenia optymalizatorów w nowoczesnych SZBD (jak PG czy MS SQL), zawsze należy bezwzględnie unikać złączeń JOIN i zamieniać je na niezależne podzapytania w klauzuli SELECT, by przyspieszyć odczyt.", "is_correct": false }
+             ]
+           },
+           {
+             "question": "W jaki sposób zaawansowane mechanizmy systemów relacyjnych (szczególnie MS SQL Server) zarządzają skomplikowanymi blokadami (Locks)?",
+             "options": [
+               { "text": "Blokada typu Update (U) pozwala odczytać dane, ale sygnalizuje intencję ich modyfikacji, chroniąc przed typowymi zakleszczeniami w przypadku, gdy dwie transakcje czytają, a potem chcą zapisać ten sam wiersz.", "is_correct": true },
+               { "text": "Blokady intencyjne (Intent Locks, np. IS, IX) zakładane są na wyższych szczeblach hierarchii (np. na tabeli), aby szybko poinformować inne sesje, że jakiś wiersz niżej posiada już założoną blokadę.", "is_correct": true },
+               { "text": "Silnik bazy domyślnie nakłada blokady typu Share (S) podczas instrukcji INSERT, aby inni użytkownicy mogli szybciej odczytywać wstawiany jeszcze strumień.", "is_correct": false },
+               { "text": "Eskalacja blokad (Lock Escalation) to pożądany mechanizm zawsze podnoszący wydajność zapytania – polega on na zamianie blokady z poziomu całej tabeli na miliony pojedynczych blokad wierszowych.", "is_correct": false }
+             ]
+           },
+           {
+             "question": "Jaka jest rola, różnica i kolejność działania klauzul WHERE oraz HAVING podczas filtrowania i agregacji danych w SQL?",
+             "options": [
+               { "text": "Klauzula WHERE służy do odfiltrowania pojedynczych wierszy przed przystąpieniem do grupowania i wyliczania agregatów.", "is_correct": true },
+               { "text": "Klauzula HAVING może filtrować wyniki wyłącznie w oparciu o użyte funkcje agregujące (np. w celu odrzucenia grup, których SUM(kwota) < 1000) i działa po klauzuli GROUP BY.", "is_correct": true },
+               { "text": "Zapisanie warunku typu WHERE COUNT(id) > 5 jest w standardzie SQL jak najbardziej prawidłowe i wykona się natychmiastowo przed grupowaniem.", "is_correct": false },
+               { "text": "Brak klauzuli GROUP BY w zapytaniu zmusza bazę do wykonania agregacji na wszystkich pobranych z tabeli wierszach naraz (jako jedna wielka grupa wyników).", "is_correct": true }
+             ]
+           },
+           {
+             "question": "Czym charakteryzuje się relacyjna architektura typu Klient-Serwer, w której zazwyczaj działają systemy takie jak PostgreSQL czy MS SQL Server?",
+             "options": [
+               { "text": "Aplikacja kliencka zazwyczaj jedynie zapewnia interfejs użytkownika i przesyła skomponowane polecenia tekstowe w języku SQL do serwera przez sieć.", "is_correct": true },
+               { "text": "Centralny Serwer odpowiada za parsowanie zapytań, kompilowanie planów wykonania, weryfikację uprawnień, logowanie zmian (WAL/TranLog) i dostęp do struktury plików.", "is_correct": true },
+               { "text": "Klient w tej architekturze pobiera cały, surowy plik bazy danych na własny dysk lokalny, przetwarza go i wysyła z powrotem.", "is_correct": false },
+               { "text": "Dzięki architekturze Klient-Serwer, ograniczenia związane ze spójnością bazy (Constraints, Triggers) mogą być centralizowane w jednym miejscu w samej bazie danych, chroniąc przed błędami wielu aplikacji klienckich.", "is_correct": true }
+             ]
+           },
+           {
+             "question": "W jaki sposób mechanizm kontroli współbieżności MVCC (Multi-Version Concurrency Control) pomaga w rozwiązywaniu problemów wydajnościowych, w porównaniu z klasycznymi blokadami?",
+             "options": [
+               { "text": "Odczyty w bazie (SELECT) zazwyczaj w ogóle nie czekają na zwolnienie blokady założonej przez zapisujące dane sesje (UPDATE/DELETE).", "is_correct": true },
+               { "text": "Kiedy dane są aktualizowane (UPDATE), zamiast nadpisywania informacji w miejscu (in-place), wstawiana jest nowa ukryta wersja wiersza, podczas gdy stara wciąż służy transakcjom odczytującym te same zasoby.", "is_correct": true },
+               { "text": "Mechanizm MVCC eliminuje zjawisko fragmentacji bazy danych, dzięki czemu operacje takie jak VACUUM w systemie PostgreSQL stają się niepotrzebne.", "is_correct": false },
+               { "text": "Dzięki MVCC każda transakcja modyfikująca dane automatycznie usypia wszystkie procesy na serwerze i tworzy jednosekundową kolejkę zapisów (Time-Wait state).", "is_correct": false }
+             ]
+           }
+           ,{
+             "question": "Jakie są główne założenia dotyczące encji i ich atrybutów na diagramach ERD (Entity-Relationship Diagram)?",
+             "options": [
+               { "text": "Encja reprezentuje obiekt dający się odróżnić i opisać, a graficznie przedstawiana jest najczęściej jako prostokąt.", "is_correct": true },
+               { "text": "Encja słaba (zależna) może istnieć całkowicie samodzielnie, bez żadnego powiązania z innymi obiektami w systemie.", "is_correct": false },
+               { "text": "Atrybuty opisujące encję na etapie logicznym, po przejściu do fizycznego modelu relacyjnego, stają się kolumnami tabeli.", "is_correct": true },
+               { "text": "Identyfikację konkretnych instancji w encji realizuje się za pomocą unikalnego atrybutu (lub ich zbioru) nazywanego Kluczem głównym (PK).", "is_correct": true }
+             ]
+           },
+           {
+             "question": "Które z podanych zasad są kluczowe przy eliminacji redundancji i optymalizacji projektowania tabel w bazie danych?",
+             "options": [
+               { "text": "Należy unikać przechowywania atrybutów wyliczalnych, takich jak wiek wyznaczony na podstawie daty urodzenia, aby zapobiec niespójności danych.", "is_correct": true },
+               { "text": "Zasada 'Brzytwy Ockhama' nakazuje nie mnożyć bytów (encji i tabel) ponad rzeczywistą potrzebę systemu.", "is_correct": true },
+               { "text": "Prawidłowo zaprojektowana baza z łatwością obsługuje grupy powtarzające się, np. zapisanie pięciu adresów e-mail w jednej kolumnie oddzielonych przecinkiem.", "is_correct": false },
+               { "text": "Należy powielać jak najwięcej danych tekstowych we wszystkich tabelach powiązanych, by maksymalnie zredukować potrzebę stosowania złączeń (JOIN).", "is_correct": false }
+             ]
+           },
+           {
+             "question": "W jaki sposób na diagramach ERD (i później w silnikach takich jak PostgreSQL czy MS SQL) opisuje się powiązania między tabelami?",
+             "options": [
+               { "text": "Mechanizm opcjonalności określa, czy relacja między rekordami jest absolutnie wymagana, czy kolumna powiązania może przyjąć wartość NULL.", "is_correct": true },
+               { "text": "Liczność (Cardinality) ustala dopuszczalne proporcje powiązań, np. relacja jeden-do-jeden (1:1) lub jeden-do-wielu (1:N).", "is_correct": true },
+               { "text": "Bezpośrednia implementacja relacji wiele-do-wiele (M:N) jest w pełni wspierana we wszystkich standardowych, komercyjnych silnikach SQL bez potrzeby zmian schematu.", "is_correct": false },
+               { "text": "Podstawowym narzędziem implementującym powiązanie zdefiniowane w diagramie ERD do fizycznej tabeli jest ograniczenie typu FOREIGN KEY (Klucz obcy).", "is_correct": true }
+             ]
+           },
+           {
+             "question": "Które z poniższych stwierdzeń poprawnie charakteryzują rolę statystyk i analizę danych przez optymalizator w relacyjnych bazach danych (SQL Server i PostgreSQL)?",
+             "options": [
+               { "text": "Optymalizatory kosztowe (CBO) używają statystyk opisujących rozkład danych w kolumnie, by podjąć decyzję, czy opłaca się użyć indeksu, czy wykonać pełne skanowanie (Table Scan).", "is_correct": true },
+               { "text": "Zaktualizowane statystyki gwarantują zablokowanie tabeli przed przypadkowym usunięciem danych instrukcją DELETE.", "is_correct": false },
+               { "text": "W MS SQL Server za ich odświeżenie odpowiada instrukcja UPDATE STATISTICS, podczas gdy w PostgreSQL zbiera je polecenie ANALYZE (często działające w tle jako autovacuum).", "is_correct": true },
+               { "text": "Brak aktualnych statystyk nie ma najmniejszego wpływu na wydajność zapytania, o ile kolumny są odpowiednio zaindeksowane w strukturze B+Drzewa.", "is_correct": false }
+             ]
+           },
+           {
+             "question": "Jeden z fundamentalnych postulatów Codd'a dotyczy istnienia 'Pełnego języka danych'. Co wchodzi w zakres tego pojęcia w kontekście standardu SQL?",
+             "options": [
+               { "text": "Możliwość manipulowania danymi w tabelach, co standard SQL pokrywa komendami z grupy DML (INSERT, UPDATE, DELETE).", "is_correct": true },
+               { "text": "Zdolność do określania struktury logicznej bazy i schematów, za co odpowiadają instrukcje DDL (CREATE, ALTER, DROP).", "is_correct": true },
+               { "text": "Możliwość zarządzania uprawnieniami bezpieczeństwa w bazie, co realizują komendy DCL (GRANT, REVOKE).", "is_correct": true },
+               { "text": "Wymuszenie, aby język ten musiał obsługiwać programowanie w pełni obiektowe z dziedziczeniem klas jako swoją główną cechą.", "is_correct": false }
+             ]
+           },
+           {
+             "question": "W jaki sposób w języku SQL możemy kontrolować grupowanie oraz ograniczać pobierane zbiory danych za pomocą dedykowanych klauzul i funkcji?",
+             "options": [
+               { "text": "Funkcje agregujące, takie jak MIN, MAX, AVG czy SUM, pozwalają wykonywać obliczenia matematyczne dla całych bloków (grup) wierszy.", "is_correct": true },
+               { "text": "Operator LIKE pozwala filtrować ciągi znaków za pomocą wzorców tekstowych używając specjalnych znaków (np. % czy _).", "is_correct": true },
+               { "text": "Klauzula HAVING jest zazwyczaj stosowana w parze z GROUP BY, aby nałożyć warunki filtracji na wynik funkcji agregującej (np. odrzucenie grup z SUMą mniejszą niż 1000).", "is_correct": true },
+               { "text": "Klauzula WHERE doskonale radzi sobie z filtrowaniem danych zagregowanych, dlatego użycie konstrukcji `WHERE COUNT(id) > 5` jest w 100% poprawne składniowo w standardowym SQL.", "is_correct": false }
+             ]
+           },
+           {
+             "question": "Standard SQL jest nieproceduralny, jednak twórcy systemów RDBMS wbudowali w nie własne języki. Co wiemy o tych rozwiązaniach proceduralnych (T-SQL, PL/SQL, PL/pgSQL)?",
+             "options": [
+               { "text": "Służą do osadzania złożonej logiki biznesowej, procedur składowanych i wyzwalaczy bezpośrednio na serwerze, blisko danych.", "is_correct": true },
+               { "text": "PL/SQL jest dialektem napisanym pierwotnie dla systemów Microsoft (MS SQL Server), podczas gdy T-SQL napędzany jest wyłącznie silnikiem Oracle.", "is_correct": false },
+               { "text": "W przeciwieństwie do czystego SQL, rozszerzenia proceduralne wprowadzają klasyczne elementy programistyczne, takie jak pętle (WHILE/FOR), instrukcje warunkowe (IF/ELSE) czy definiowanie zmiennych lokalnych.", "is_correct": true },
+               { "text": "PostgreSQL używa własnego języka PL/pgSQL, który z założenia strukturą i mechanizmami mocno inspiruje się rozwiązaniami z systemu Oracle.", "is_correct": true }
+             ]
+           },
+           {
+             "question": "Jak mechanizm zarządzania transakcjami umożliwia odwracanie błędów podczas pracy z bazą danych na poziomie poleceń języka SQL?",
+             "options": [
+               { "text": "Instrukcja COMMIT zatwierdza całą transakcję i spuszcza dane na dysk, gwarantując od tego momentu spełnienie reguły Durability (trwałości).", "is_correct": true },
+               { "text": "Użycie polecenia ROLLBACK pozwala cofnąć wszystkie instrukcje DML (np. setki błędnych zmian wywołanych UPDATE) do momentu rozpoczęcia transakcji (BEGIN).", "is_correct": true },
+               { "text": "Rozbudowane dialekty SQL udostępniają mechanizm punktów zachowania (SAVEPOINT), który pozwala w razie awarii wycofać tylko wybraną porcję najnowszych zmian bez anulowania całej transakcji.", "is_correct": true },
+               { "text": "Polecenie ROLLBACK jest w stanie wycofać każdą zaszłą zmianę, włączając w to polecenia fizycznego sformatowania dysku z systemem operacyjnym.", "is_correct": false }
+             ]
+           },
+           {
+             "question": "Na czym polega zasada 'Złączenia' (JOIN) w standardzie relacyjnych baz danych i jak należy jej używać, analizując kwestie wydajnościowe?",
+             "options": [
+               { "text": "Złączenia umożliwiają budowanie skomplikowanych widoków, czerpiąc znormalizowane dane z wielu tabel (np. Klient i Zamówienie) za pomocą kluczy obcych i głównych.", "is_correct": true },
+               { "text": "Operacje oparte o złączenia (set-based processing) są zazwyczaj setki razy wydajniejsze od wykonywania podobnej logiki ręcznie, wiersz po wierszu, z wykorzystaniem kursorów proceduralnych.", "is_correct": true },
+               { "text": "Silnik zawsze wykonuje złączenie typu INNER JOIN, jeżeli w klauzuli ON użyjemy operatora IS NULL.", "is_correct": false },
+               { "text": "Jeżeli zadanie daje się sformułować za pomocą dobrze indeksowanego zapytania typu JOIN, jest to z reguły preferowane rozwiązanie przed pisaniem zagnieżdżonych podzapytań uderzających rekursywnie w podrzędną tabelę.", "is_correct": true }
+             ]
+           },
+           {
+             "question": "Jakie narzędzia wchodzące w cykl życia projektu bazy danych nazywamy narzędziami klasy CASE i jakie są ich zadania?",
+             "options": [
+               { "text": "Pozwalają zamieniać fizyczne kopie zapasowe (backupy binarne) na logiczne pliki JSON bez obciążania procesora.", "is_correct": false },
+               { "text": "Aplikacje typu Microsoft Visio, Vertabelo czy Erwin Data Modeler to przykłady systemów, w których projektuje się abstrakcyjne diagramy encji (ERD).", "is_correct": true },
+               { "text": "Programy tego typu często potrafią zautomatyzować proces wdrażania bazy – automatycznie 'tłumacząc' relacje narysowane na grafie w gotowy plik migracji w języku DDL (np. CREATE TABLE, ALTER TABLE ADD CONSTRAINT).", "is_correct": true },
+               { "text": "Narzędzia CASE działają jako zaawansowane skanery antywirusowe dedykowane zabezpieczaniu logów Write-Ahead Log przed atakami ransomware.", "is_correct": false }
+             ]
+           }
+         
+        ]
+      }
